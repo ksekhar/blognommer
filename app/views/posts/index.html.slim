@@ -1,0 +1,45 @@
+.page-header
+  = link_to new_blog_post_path, class: 'btn btn-primary' do
+    span.glyphicon.glyphicon-plus
+    |  New Post
+  h1
+    | Listing posts
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th
+          | Title
+        th
+          | Url slug
+        th
+          | User
+        th
+          | Content
+        th
+          | Published
+        th
+          | Views
+        th
+        th
+        th
+    tbody
+      - @posts.each do | post |
+        tr
+          td
+            = link_to post.title, blog_post_path(@blog, post)
+          td
+            = post.slug
+          td
+            = post.user_id
+          td
+            = post.content
+          td
+            = post.published
+          td
+            = post.views
+          td
+            = link_to 'Edit', edit_blog_post_path(@blog, post)
+          td
+            = link_to 'Destroy', blog_post_path(@blog, post), method: :delete, data: { confirm: 'Are you sure?' }

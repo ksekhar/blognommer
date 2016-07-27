@@ -1,0 +1,43 @@
+.page-header
+  = link_to new_blog_path, class: 'btn btn-primary' do 
+    span.glyphicon.glyphicon-plus
+    |  New Blog
+  h1
+    | Listing blogs
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th
+          | Name
+        th
+          | Url slug
+        th
+          | Active
+        th
+          | Visitors
+        th
+          | User
+        th
+        th
+        th
+    tbody
+      - @blogs.each do | blog |
+        tr
+          td
+            = link_to blog.name, blog
+          td
+            = blog.slug
+          td
+            = blog.active
+          td
+            = blog.visitors
+          td
+            = blog.user.try(:email)
+          td
+            = link_to 'Posts', blog_posts_path(blog)
+          td
+            = link_to 'Edit', edit_blog_path(blog) 
+          td
+            = link_to 'Destroy', blog, method: :delete, data: { confirm: 'Are you sure?' } 

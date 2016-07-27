@@ -8,6 +8,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5.x'
 gem 'jbuilder', '~> 2.5'
+gem 'friendly_id', require: true
 group :development, :test do
   gem 'byebug', platform: :mri
 end
@@ -28,6 +29,7 @@ gem 'slim-rails'
 group :development do
   gem 'hub', :require=>nil
   gem 'rails_layout'
+  gem 'bootstrap-generators'
 end
 group :production do
   gem 'rails_12factor'
