@@ -1,7 +1,8 @@
 .page-header
-  = link_to new_blog_path, class: 'btn btn-primary' do 
-    span.glyphicon.glyphicon-plus
-    |  New Blog
+  - if current_user.present? && current_user.blogger?
+    = link_to new_blog_path, class: 'btn btn-primary' do
+      span.glyphicon.glyphicon-plus
+      |  New Blog
   h1
     | Listing blogs
 
@@ -21,12 +22,11 @@
           | User
         th
         th
-        th
     tbody
       - @blogs.each do | blog |
         tr
           td
-            = link_to blog.name, blog
+            = link_to blog.name, blog_posts_path(blog)
           td
             = blog.slug
           td
@@ -34,10 +34,10 @@
           td
             = blog.visitors
           td
-            = blog.user.try(:email)
-          td
-            = link_to 'Posts', blog_posts_path(blog)
-          td
-            = link_to 'Edit', edit_blog_path(blog) 
-          td
-            = link_to 'Destroy', blog, method: :delete, data: { confirm: 'Are you sure?' } 
+            = blog.user.try(:name) || 'Anonymous'
+          -if current_user.present? && current_user.blogger? && current_user == blog.user
+            td
+              = link_to 'Edit', edit_blog_path(blog)
+            td
+              = link_to 'Destroy', blog, method: :delete,
+                      data: { confirm: 'Are you sure?' }
