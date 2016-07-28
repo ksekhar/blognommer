@@ -2,6 +2,9 @@ class User < ApplicationRecord
   enum role: [:user, :blogger, :admin]
   after_initialize :set_default_role, if: -> { new_record? }
 
+  has_many :blogs, dependent: :destroy
+  has_many :posts, dependent: :destroy
+
   def set_default_role
     self.role ||= :user
   end

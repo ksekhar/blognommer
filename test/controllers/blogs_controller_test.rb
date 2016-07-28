@@ -38,7 +38,11 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update blog" do
-    patch blog_url(@blog), params: { blog: { active: @blog.active, name: @blog.name, slug: @blog.slug, user_id: @blog.user_id, visitors: @blog.visitors } }
+    patch blog_url(@blog), params: { blog: { active: @blog.active,
+                                             name: @blog.name,
+                                             slug: @blog.slug,
+                                             user_id: @blog.user_id,
+                                             visitors: @blog.visitors } }
     assert_redirected_to blog_url(@blog)
   end
 

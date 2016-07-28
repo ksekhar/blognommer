@@ -1,7 +1,8 @@
 .page-header
-  = link_to new_blog_post_path, class: 'btn btn-primary' do
-    span.glyphicon.glyphicon-plus
-    |  New Post
+  -if current_user.present? && current_user.blogger?
+    = link_to new_blog_post_path, class: 'btn btn-primary' do
+      span.glyphicon.glyphicon-plus
+      |  New Post
   h1
     | Listing posts
 

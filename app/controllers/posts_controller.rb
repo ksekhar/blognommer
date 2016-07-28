@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @blog =  Blog.friendly.find(params[:blog_id])
+    @blog =  current_user.blogs.friendly.find(params[:blog_id])
     @posts = @blog.posts
   end
 
@@ -15,8 +15,10 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @blog = Blog.friendly.find(params[:blog_id])
-    @post = Post.new
+    @blog = current_user.blogs.friendly.find(params[:blog_id])
+    @post = @blog.posts.build do |post|
+        post.user = current_user
+    end
   end
 
   # GET /posts/1/edit
@@ -26,12 +28,15 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    @blog = Blog.friendly.find(params[:blog_id])
-    @post = Post.new(post_params)
+    @blog = current_user.blogs.friendly.find(params[:blog_id])
+    @post = @blog.posts.build(post_params) do |post|
+      post.user = current_user
+    end
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to blog_post_path(@blog, @post), notice: 'Post was successfully created.' }
+        format.html { redirect_to blog_post_path(@blog, @post),
+                                  notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new }
@@ -45,7 +50,8 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to blog_post_path(@blog, @post), notice: 'Post was successfully updated.' }
+        format.html { redirect_to blog_post_path(@blog, @post),
+                                  notice: 'Post was successfully updated.' }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit }
@@ -59,7 +65,8 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to blog_posts_url(@blog), notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to blog_posts_url(@blog),
+                                notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -67,12 +74,13 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @blog = Blog.friendly.find(params[:blog_id])
-      @post = Post.friendly.find(params[:id])
+      @blog = current_user.blogs.friendly.find(params[:blog_id])
+      @post = current_user.posts.friendly.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Never trust parameters from the scary internet,
+    # only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :user_id, :content, :published, :views, :blog_id)
+      params.require(:post).permit(:title, :content)
     end
 end
