@@ -1,34 +1,35 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:edit, :update, :destroy]
+  before_action :set_blog, only: [:new, :create, :edit, :update, :destroy]
 
-  # GET /posts
-  # GET /posts.json
+  # GET /blog/1/posts
+  # GET /blog/1/posts.json
   def index
-    @blog =  current_user.blogs.friendly.find(params[:blog_id])
+    @blog =  Blog.friendly.find(params[:blog_id])
     @posts = @blog.posts
   end
 
-  # GET /posts/1
-  # GET /posts/1.json
+  # GET /blog/1/posts/1
+  # GET /blog/1/posts/1.json
   def show
+    @blog = Blog.friendly.find(params[:blog_id])
+    @post = @blog.posts.friendly.find(params[:id])
   end
 
-  # GET /posts/new
+  # GET /blog/1/posts/new
   def new
-    @blog = current_user.blogs.friendly.find(params[:blog_id])
     @post = @blog.posts.build do |post|
         post.user = current_user
     end
   end
 
-  # GET /posts/1/edit
+  # GET /blog/1/posts/1/edit
   def edit
   end
 
-  # POST /posts
-  # POST /posts.json
+  # POST /blog/1/posts
+  # POST /blog/1/posts.json
   def create
-    @blog = current_user.blogs.friendly.find(params[:blog_id])
     @post = @blog.posts.build(post_params) do |post|
       post.user = current_user
     end
@@ -45,8 +46,8 @@ class PostsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /posts/1
-  # PATCH/PUT /posts/1.json
+  # PATCH/PUT /blog/1/posts/1
+  # PATCH/PUT /blog/1/posts/1.json
   def update
     respond_to do |format|
       if @post.update(post_params)
@@ -60,8 +61,8 @@ class PostsController < ApplicationController
     end
   end
 
-  # DELETE /posts/1
-  # DELETE /posts/1.json
+  # DELETE /blog/1/posts/1
+  # DELETE /blog/1/posts/1.json
   def destroy
     @post.destroy
     respond_to do |format|
@@ -74,8 +75,11 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @blog = current_user.blogs.friendly.find(params[:blog_id])
       @post = current_user.posts.friendly.find(params[:id])
+    end
+
+    def set_blog
+      @blog = current_user.blogs.friendly.find(params[:blog_id])
     end
 
     # Never trust parameters from the scary internet,

@@ -1,2 +1,2 @@
 li
-  = link_to t('blognommer.navigation.blogs'), blogs_path
+  = link_to t('blognommer.navigation.blogs'), blogs_path if current_user.present? && current_user.blogger?

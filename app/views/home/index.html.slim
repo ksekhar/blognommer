@@ -1,0 +1,31 @@
+.page-header
+  h1
+    | Listing blogs
+
+.table-responsive
+  table.table.table-striped.table-bordered.table-hover
+    thead
+      tr
+        th
+          | Name
+        th
+          | Url slug
+        th
+          | Active
+        th
+          | Visitors
+        th
+          | Author
+    tbody
+      - @blogs.each do | blog |
+        tr
+          td
+            = link_to blog.name, blog_posts_path(blog)
+          td
+            = blog.slug
+          td
+            = blog.active
+          td
+            = blog.visitors
+          td
+            = blog.user.try(:name) || 'Anonymous'
