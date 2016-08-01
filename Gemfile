@@ -9,6 +9,18 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 5.x'
 gem 'jbuilder', '~> 2.5'
 gem 'friendly_id', require: true
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'bootstrap-sass'
+gem 'devise'
+gem 'devise_invitable'
+gem 'pundit'
+gem 'pg'
+gem 'sendgrid'
+gem 'simple_form'
+gem 'slim-rails'
+gem 'redis'
+gem 'redis-namespace'
+gem 'sidekiq'
 group :development, :test do
   gem 'byebug', platform: :mri
 end
@@ -17,17 +29,7 @@ group :development do
   gem 'listen', '~> 3.0.5'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-end
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'bootstrap-sass'
-gem 'devise'
-gem 'devise_invitable'
-gem 'pg'
-gem 'sendgrid'
-gem 'simple_form'
-gem 'slim-rails'
-group :development do
-  gem 'hub', :require=>nil
+  gem 'hub', require: nil
   gem 'rails_layout'
   gem 'bootstrap-generators'
 end

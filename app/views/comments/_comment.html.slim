@@ -1,0 +1,5 @@
+article data={user_id: comment.try(:user).try(:id)}
+  h3
+    | Comment by #{comment.try(:user).try(:name) || 'No Name Provided'}
+  p
+    = comment.comment

@@ -5,6 +5,7 @@ html
     title
       = content_for?(:title) ? yield(:title) : t('blognommer.title')
     meta name="description" content="#{content_for?(:description) ? yield(:description) : 'Blognommer'}"
+    = action_cable_meta_tag
     = stylesheet_link_tag 'application',
             'data-turbolinks-track': true,
             media: 'all'

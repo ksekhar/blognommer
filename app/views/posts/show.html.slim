@@ -1,35 +1,25 @@
 .page-header
   = link_to blog_posts_path(@blog), class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
-    |  Back
+      | Back To
+      = @blog.name
   - if current_user.present? && current_user.blogger? && current_user.id == @blog.user.id
     = link_to edit_blog_post_path(@blog, @post), class: 'btn btn-primary' do
       span.glyphicon.glyphicon-pencil
       |  Edit
-  h1
-    | Show post
-dl.dl-horizontal
-  dt
-    | Title:
-  dd
-    = @post.title
-  dt
-    | Url slug:
-  dd
-    = @post.slug
-  dt
-    | User:
-  dd
-    = @post.user_id
-  dt
-    | Content:
-  dd
-    = @post.content
-  dt
-    | Published:
-  dd
-    = @post.published
-  dt
-    | Views:
-  dd
-    = @post.views
+  .container
+    .row
+      .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+        .post-heading
+          h1
+            = @post.title
+            h2.subheading
+              span.meta
+                | Posted By
+                = @post.user.name
+.container
+  .row
+    .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+      = @post.content
+
+= render 'comments/comments', post: @post, blog: @blog

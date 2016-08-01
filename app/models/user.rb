@@ -1,12 +1,13 @@
 class User < ApplicationRecord
-  enum role: [:user, :blogger, :admin]
+  enum role: [:visitor, :blogger, :admin]
   after_initialize :set_default_role, if: -> { new_record? }
 
   has_many :blogs, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :nullify
 
   def set_default_role
-    self.role ||= :user
+    self.role ||= :blogger
   end
 
   # Include default devise modules. Others available are:

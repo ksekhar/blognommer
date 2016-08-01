@@ -1,0 +1,6 @@
+| $('#comments').append('
+= j render @comment
+| ')
+| $('#new_comment').replaceWith('
+= j render 'comments/new', blog: @blog, post: @post, comment: @post.comments.build
+|');
