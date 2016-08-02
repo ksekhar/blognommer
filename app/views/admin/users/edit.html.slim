@@ -1,0 +1,9 @@
+= simple_form_for(@user) do |f|
+  = f.error_notification
+
+  .h3 Editing User #{@user.name}
+  .form-inputs
+  = f.input :role, collection: User.roles.keys
+
+  .form-actions
+  = f.button :submit

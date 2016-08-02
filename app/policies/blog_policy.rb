@@ -23,6 +23,10 @@ class BlogPolicy < ApplicationPolicy
     user.blogger? && user.id == blog.user.id
   end
 
+  def destroy?
+    user.blogger? && user.id == blog.user.id
+  end
+
   class Scope < Scope
     def resolve
       scope

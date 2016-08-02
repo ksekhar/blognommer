@@ -2,7 +2,6 @@ App.comments = App.cable.subscriptions.create "CommentsChannel",
   collection: -> $("[data-channel='comments']")
 
   connected: ->
-# FIXME: While we wait for cable subscriptions to always be finalized before sending messages
     setTimeout =>
       @followCurrentMessage()
       @installPageChangeCallback()
@@ -12,7 +11,7 @@ App.comments = App.cable.subscriptions.create "CommentsChannel",
     @collection().append(data.comment) unless @userIsCurrentUser(data.comment)
 
   userIsCurrentUser: (comment) ->
-    $(comment).attr('data-user-id') is $('meta[name=current-user]').attr('id')
+    $(comment).find('article').attr('data-user-id') is $('meta[name=current-user]').attr('id')
 
   followCurrentMessage: ->
     if postId = @collection().data('post-id')

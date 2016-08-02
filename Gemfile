@@ -21,6 +21,7 @@ gem 'slim-rails'
 gem 'redis'
 gem 'redis-namespace'
 gem 'sidekiq'
+gem 'wysiwyg-rails'
 group :development, :test do
   gem 'byebug', platform: :mri
 end

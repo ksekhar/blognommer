@@ -5,12 +5,17 @@ class CommentsController < ApplicationController
   before_action -> { authorize(Comment.new) }, only: [:create]
 
   def create
-    @comment = @post.comments.create!(comment_params) do |comment|
+    @comment = @post.comments.new(comment_params) do |comment|
       comment.user = current_user
     end
     respond_to do |format|
-      format.js
-      format.json { render :comment, status: :created, location: @comment }
+      if @comment.save
+        format.js
+        format.json { render :comment, status: :created, location: @comment }
+      else
+        format.js
+        format.json { render json: @blog.errors, status: :unprocessable_entity }
+      end
     end
   end
 

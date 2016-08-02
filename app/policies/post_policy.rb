@@ -12,12 +12,37 @@ class PostPolicy < ApplicationPolicy
   end
 
   def create?
-    user.blogger?
+    user.blogger? && user.id == post.user.id
   end
 
-  class Scope < Scope
+  def author?
+    user.id == post.user.id
+  end
+
+  def update?
+    user.blogger? && user.id == post.user.id
+  end
+
+  def destroy?
+    user.blogger? && user.id == post.user.id
+  end
+
+  class Scope
+    attr_accessor :user, :scope, :blog
+
+    def initialize(user, scope, blog)
+      @user = user
+      @scope = scope
+      @blog = blog
+    end
+
     def resolve
-      scope
+      if user.present? && user.blogger? && user.id == blog.user.id
+        scope
+      else
+        scope.where(published: true)
+      end
     end
   end
+
 end

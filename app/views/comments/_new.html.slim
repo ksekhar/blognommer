@@ -1,8 +1,8 @@
-= simple_form_for([blog,post,comment], remote: true) do |f|
-  = f.error_notification
+.col-sm-10.comment-form
+  = simple_form_for([blog,post,comment], remote: true) do |f|
+    .errors.alert-danger
+    .form-inputs
+      = f.input :comment
 
-  .form-inputs
-    = f.input :comment
-
-  .form-actions
-    = f.button :submit
+    .form-actions
+      = f.button :submit

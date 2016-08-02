@@ -1,16 +1,11 @@
 class BlogsController < ApplicationController
-  before_action :set_blog, only: [:show, :edit, :update, :destroy]
-  before_action -> { authorize(@blog) }, only: [:new, :edit, :update, :create, :destroy]
+  before_action :set_blog, only: [:edit, :update, :destroy]
+  before_action -> { authorize(@blog || Blog.new) }, only: [:new, :edit, :update, :create, :destroy]
 
   # GET /blogs
   # GET /blogs.json
   def index
     @blogs = current_user.blogs
-  end
-
-  # GET /blogs/1
-  # GET /blogs/1.json
-  def show
   end
 
   # GET /blogs/new
@@ -29,7 +24,7 @@ class BlogsController < ApplicationController
 
     respond_to do |format|
       if @blog.save
-        format.html { redirect_to @blog,
+        format.html { redirect_to blogs_url,
                                   notice: 'Blog was successfully created.' }
         format.json { render :show, status: :created, location: @blog }
       else
@@ -44,7 +39,7 @@ class BlogsController < ApplicationController
   def update
     respond_to do |format|
       if @blog.update(blog_params)
-        format.html { redirect_to @blog,
+        format.html { redirect_to blogs_url,
                                   notice: 'Blog was successfully updated.' }
         format.json { render :show, status: :ok, location: @blog }
       else
@@ -57,7 +52,7 @@ class BlogsController < ApplicationController
   # DELETE /blogs/1
   # DELETE /blogs/1.json
   def destroy
-    @blog.destroy
+    @blog.deactivate!
     respond_to do |format|
       format.html { redirect_to blogs_url,
                                 notice: 'Blog was successfully destroyed.' }

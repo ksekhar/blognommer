@@ -1,4 +1,4 @@
 section#comments data={channel: 'comments', post_id: post.id}
-  = render post.comments
+  = render post.comments.joins(:user).order(:created_at)
 
 = render 'comments/new', post: post, blog: blog, comment: post.comments.build

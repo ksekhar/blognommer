@@ -8,3 +8,9 @@
 
   .form-actions
     = f.button :submit
+=javascript_tag do
+ | $('#post_content').froalaEditor({
+                       fontSizeSelection: true,
+                       fontFamilySelection: true,
+                       fontSize: ['8', '10', '12', '14', '18', '30', '60', '96']
+   });

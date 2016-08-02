@@ -1,6 +1,12 @@
-| $('#comments').append('
-= j render @comment
-| ')
-| $('#new_comment').replaceWith('
-= j render 'comments/new', blog: @blog, post: @post, comment: @post.comments.build
-|');
+-if @comment.errors.present?
+  |$('.errors').html('#{@comment.errors.full_messages.to_sentence}');
+  |$('.comment.form').replaceWith('
+  = j render 'comments/new', blog: @blog, post: @post, comment: @comment
+  |');
+-else
+  |$("[data-channel='comments']").append('
+  = j render @comment
+  | ');
+  |$('.comment-form').replaceWith('
+  = j render 'comments/new', blog: @blog, post: @post, comment: @post.comments.build
+  |');

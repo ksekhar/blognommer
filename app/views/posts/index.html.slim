@@ -1,5 +1,5 @@
 .page-header
-  - if current_user.present? && current_user.blogger? && current_user.id == @blog.user.id
+  - if current_user.present? && policy(Post.new(user: @blog.user)).create?
     = link_to new_blog_post_path, class: 'btn btn-primary' do
       span.glyphicon.glyphicon-plus
       |  New Post
@@ -13,36 +13,28 @@
         th
           | Title
         th
-          | Url slug
-        th
           | User
         th
           | Content
         th
-          | Published
-        th
           | Views
-        - if current_user.present? && current_user.blogger? && current_user.id == @blog.user.id
-          th
-          th
-          th
     tbody
       - @posts.each do | post |
         tr
           td
-            = link_to post.title, blog_post_path(@blog, post)
+            = link_to post.title, blog_post_no_prefix_path(@blog, post)
           td
-            = post.slug
+            = post.user.try(:name)
           td
-            = post.user_id
-          td
-            = post.content
-          td
-            = post.published
+            = post.content.truncate_words(10).html_safe
           td
             = post.views
-          - if current_user.present? && current_user.blogger? && current_user.id == @blog.user.id
+          - if current_user.present? && policy(post).update?
             td
               = link_to 'Edit', edit_blog_post_path(@blog, post)
             td
-              = link_to 'Destroy', blog_post_path(@blog, post), method: :delete, data: { confirm: 'Are you sure?' }
+              = link_to 'Publish', publish_blog_post_path(@blog, post), method: :put
+            td
+              = link_to 'Destroy', blog_post_path(@blog, post),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' }

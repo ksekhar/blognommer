@@ -1,5 +1,8 @@
-article data={user_id: comment.try(:user).try(:id)}
-  h3
-    | Comment by #{comment.try(:user).try(:name) || 'No Name Provided'}
-  p
-    = comment.comment
+.col-sm-10
+  .panel.panel-default
+    article data={user_id: comment.try(:user).try(:id)}
+    .panel-heading
+      | Comment by
+      strong  #{comment.try(:user).try(:name) || 'No Name Provided'} at #{comment.created_at.localtime.to_s(:long)}
+    .panel-body
+      = comment.comment

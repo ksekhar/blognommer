@@ -1,25 +1,23 @@
-.page-header
-  = link_to blog_posts_path(@blog), class: 'btn btn-default' do
+.page-header.pull-right
+  = link_to blog_posts_no_prefix_path(@blog), class: 'btn btn-default' do
     span.glyphicon.glyphicon-list-alt
-      | Back To
-      = @blog.name
-  - if current_user.present? && current_user.blogger? && current_user.id == @blog.user.id
+      |  Back To #{@blog.name}
+  - if current_user.present? && policy(@post).update?
     = link_to edit_blog_post_path(@blog, @post), class: 'btn btn-primary' do
       span.glyphicon.glyphicon-pencil
       |  Edit
   .container
     .row
       .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-        .post-heading
+        .post-heading.panel-heading
           h1
             = @post.title
-            h2.subheading
+            h4.subheading
               span.meta
-                | Posted By
-                = @post.user.name
-.container
+                | Posted By #{@post.user.name} on #{@post.created_at.localtime.to_s(:long)}
+.container.panel.panel-default
   .row
-    .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-      = @post.content
+    .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1.panel-body
+      = @post.content.html_safe
 
 = render 'comments/comments', post: @post, blog: @blog

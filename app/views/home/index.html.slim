@@ -1,6 +1,6 @@
 .page-header
   h1
-    | Listing blogs
+    | Available blogs
 
 .table-responsive
   table.table.table-striped.table-bordered.table-hover
@@ -9,10 +9,6 @@
         th
           | Name
         th
-          | Url slug
-        th
-          | Active
-        th
           | Visitors
         th
           | Author
@@ -20,11 +16,7 @@
       - @blogs.each do | blog |
         tr
           td
-            = link_to blog.name, blog_posts_path(blog)
-          td
-            = blog.slug
-          td
-            = blog.active
+            = link_to blog.name, blog_posts_no_prefix_path(blog)
           td
             = blog.visitors
           td

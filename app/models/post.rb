@@ -8,4 +8,8 @@ class Post < ApplicationRecord
 
   validates :title, presence: true, uniqueness: true
   validates :slug, presence: true, uniqueness: true
+
+  def publish!
+    update(published: true)
+  end
 end

@@ -15,4 +15,6 @@
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require bootstrap
+//= require froala_editor.min.js
+//= require plugins/font_size.min.js
 //= require_tree .
