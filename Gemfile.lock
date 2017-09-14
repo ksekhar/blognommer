@@ -248,7 +248,7 @@ DEPENDENCIES
   wysiwyg-rails
 
 RUBY VERSION
-   ruby 2.3.1p112
+   ruby 2.4.1p111
 
 BUNDLED WITH
-   1.12.5
+   1.16.0.pre.2
