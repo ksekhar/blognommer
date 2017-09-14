@@ -22,6 +22,9 @@ gem 'redis'
 gem 'redis-namespace'
 gem 'sidekiq'
 gem 'wysiwyg-rails'
+gem 'rails_serve_static_assets'
+gem 'rails_stdout_logging'
+gem 'rails_12factor'
 group :development, :test do
   gem 'byebug', platform: :mri
 end
